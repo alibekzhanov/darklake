@@ -1,0 +1,46 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/components/header/header.css' %}">
+<script src="{% static 'js/header/header.js' %}" defer></script>
+
+<header id="header">
+
+    <!-- NAV MAIN -->
+    <nav class="navbar">
+
+        <div class="logo">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'icons/logo_gradient.svg' %}" alt="Darklake Logo">
+            </a>
+        </div>
+
+        <ul class="nav_links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'features' %}">Features</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'support' %}">Support</a></li>
+
+            <li class="menu_button">
+                <a href="#" id="open_sidebar">
+                    <img src="{% static 'icons/menu_icon_white.svg' %}" alt="Menu">
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <!-- SIDEBAR (ОТДЕЛЬНО!) -->
+    <ul id="sidebar" class="sidebar">
+        <li class="close_icon">
+            <a href="#" id="close_sidebar">
+                <img src="{% static 'icons/close_icon_white.svg' %}" alt="Close">
+            </a>
+        </li>
+
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'features' %}">Features</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="{% url 'support' %}">Support</a></li>
+    </ul>
+
+</header>

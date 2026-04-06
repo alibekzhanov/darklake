@@ -1,0 +1,20 @@
+{% load static %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/components/search_section.css' %}">
+</head>
+
+<body>
+    <div class="search_section">
+        <h1 class="search-title">Enter the website URL for analysis:</h1>
+
+        <form method="get" action="{% url 'analyze' %}" class="search-container">
+            <div class="search-box">
+                <img src="{% static 'icons/search_icon.svg' %}" class="search-icon" alt="search-icon">
+                <input type="text" name="url" placeholder="Enter URL…" class="search-input" required>
+            </div>
+
+            <button type="submit" class="analyze-btn">Analyze</button>
+        </form>
+    </div>
+</body>

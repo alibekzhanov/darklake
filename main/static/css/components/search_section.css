@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    font-family: "Mulish", sans-serif;
+}
+
+body {
+    background: url("/static/images/bg-2.jpg") no-repeat center center fixed;
+    background-size: cover;
+    animation: bgZoom 20s ease-in-out infinite;
+}
+
+@keyframes bgZoom {
+    0% {
+        background-size: 100%;
+    }
+    50% {
+        background-size: 110%;
+    }
+    100% {
+        background-size: 100%;
+    }
+}
+
+.search_section {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-title {
+    font-weight: 700;
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.search-container {
+    width: 55%;
+    max-width: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.search-box {
+    flex: 1;
+    height: 40px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 12px;
+
+    background:
+        linear-gradient(#050505, #050505) padding-box,
+        linear-gradient(115deg, #1A1A1A, #FFFFFF) border-box;
+    border: 1px solid transparent;
+}
+
+.search-icon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
+.search-input {
+    flex: 1;
+    height: 100%;
+    background: transparent;
+    outline: none;
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.search-input::placeholder {
+    color: #777777;
+}
+
+.analyze-btn {
+    height: 40px;
+    padding: 0 32px;
+    white-space: nowrap;
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+    background:
+        linear-gradient(#050505, #050505) padding-box,
+        linear-gradient(115deg, #0066A1, #00E0FF) border-box;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.analyze-btn:hover {
+    color: #ffffff;
+    background:
+        linear-gradient(115deg, #0094D9, #00FFFF) padding-box,
+        linear-gradient(115deg, #0094D9, #00FFFF) border-box;
+    transition: 0.25s ease;
+}
+

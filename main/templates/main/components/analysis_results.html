@@ -1,0 +1,332 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/components/analysis_results.css' %}">
+</head>
+
+<body>
+    <div class="dl-page">
+
+        <!-- Left menu -->
+        <aside class="dl-sidebar">
+            <nav class="dl-nav">
+
+                <a href="?url={{ target_display|urlencode }}&tab=overview"
+                   class="dl-nav-link {% if active_tab == 'overview' %}dl-active{% endif %}"
+                   data-tab="overview">
+                    Overview / Dashboard
+                </a>
+
+                <a href="?url={{ target_display|urlencode }}&tab=tech"
+                   class="dl-nav-link {% if active_tab == 'tech' %}dl-active{% endif %}"
+                   data-tab="tech">
+                    Technologies
+                </a>
+
+                <a href="?url={{ target_display|urlencode }}&tab=vulns"
+                   class="dl-nav-link {% if active_tab == 'vulns' %}dl-active{% endif %}"
+                   data-tab="vulns">
+                    Vulnerabilities
+                </a>
+
+                <a href="?url={{ target_display|urlencode }}&tab=tls"
+                   class="dl-nav-link {% if active_tab == 'tls' %}dl-active{% endif %}"
+                   data-tab="tls">
+                    SSL / TLS & Configurations
+                </a>
+
+                <a href="?url={{ target_display|urlencode }}&tab=report"
+                   class="dl-nav-link {% if active_tab == 'report' %}dl-active{% endif %}"
+                   data-tab="report">
+                    Report
+                </a>
+
+            </nav>
+        </aside>
+
+        <!-- Main -->
+        <main class="dl-main">
+            {% if error %}
+                <div class="dl-error">
+                    <div class="dl-error-title">Analysis failed</div>
+                    <div class="dl-error-text">{{ error }}</div>
+                    <a class="dl-back-link" href="{% url 'home' %}">← Back</a>
+                </div>
+            {% else %}
+
+                <!-- ===========================
+                     TAB: OVERVIEW
+                     =========================== -->
+                <div class="dl-tab {% if active_tab == 'overview' %}is-active{% endif %}" data-tab-panel="overview">
+
+                    <div class="dl-header">
+                        <div class="dl-header-left">
+                            <h1 class="dl-title">Overview / Dashboard</h1>
+                            <div class="dl-sub">
+                                Target: <span class="dl-strong">{{ target_display }}</span>
+                                <span class="dl-dot">•</span>
+                                Scanned: <span class="dl-strong">{{ scanned_at }}</span>
+                            </div>
+                        </div>
+
+                        <div class="dl-header-right">
+                            <div class="dl-badge dl-badge--{{ risk_level_key }}">{{ risk_level }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Scan summary -->
+                    <section class="dl-block">
+                        <div class="dl-block-title">SCAN SUMMARY</div>
+                        <div class="dl-text">
+                            This overview summarizes the security posture of the target website based on passive checks:
+                            response headers, TLS configuration, and lightweight stack fingerprinting. Results are meant
+                            to highlight common security weaknesses and misconfigurations that can be confirmed via public signals.
+                        </div>
+                    </section>
+
+                    <!-- Risk score -->
+                    <section class="dl-block">
+                        <div class="dl-block-title">TOTAL RISK SCORE</div>
+
+                        <div class="dl-score-row">
+                            <div class="dl-score-value">{{ risk_score }} / 100 — {{ risk_level }}</div>
+                        </div>
+
+                        <div class="dl-riskbar">
+                            <div class="dl-riskbar-track" data-score="{{ risk_score }}">
+                                <div class="dl-riskbar-marker"></div>
+                            </div>
+                            <div class="dl-riskbar-labels">
+                                <span>High Risk</span>
+                                <span>Low Risk</span>
+                            </div>
+                        </div>
+
+                        <div class="dl-text">
+                            {{ risk_summary }}
+                        </div>
+                    </section>
+
+                    <!-- Key metrics -->
+                    <section class="dl-block">
+                        <div class="dl-block-title">KEY METRICS</div>
+
+                        <div class="dl-metrics">
+                            <div class="dl-card">
+                                <div class="dl-card-label">Total Risks</div>
+                                <div class="dl-card-value">{{ metrics.total }}</div>
+                                <div class="dl-card-note">All findings across all categories.</div>
+                            </div>
+
+                            <div class="dl-card">
+                                <div class="dl-card-label">Severe Risks</div>
+                                <div class="dl-card-value">{{ metrics.severe }}</div>
+                                <div class="dl-card-note">Critical + High severity findings.</div>
+                            </div>
+
+                            <div class="dl-card">
+                                <div class="dl-card-label">Medium Risks</div>
+                                <div class="dl-card-value">{{ metrics.medium }}</div>
+                                <div class="dl-card-note">Moderate misconfigurations and warnings.</div>
+                            </div>
+
+                            <div class="dl-card">
+                                <div class="dl-card-label">Low Risks</div>
+                                <div class="dl-card-value">{{ metrics.low }}</div>
+                                <div class="dl-card-note">Minor issues or informational notices.</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Stages -->
+                    <section class="dl-block">
+                        <div class="dl-block-title">SECURITY CHECK STAGES</div>
+                        <div class="dl-text">
+                            Each stage represents a separate set of passive checks. Click into dedicated pages later for deep dive.
+                        </div>
+
+                        <div class="dl-stages">
+                            {% for s in stages %}
+                                <div class="dl-stage">
+                                    <div class="dl-stage-top">
+                                        <div class="dl-stage-name">{{ s.name }}</div>
+                                        <div class="dl-stage-status dl-stage-status--{{ s.status_key }}">{{ s.status_label }}</div>
+                                    </div>
+                                    <div class="dl-stage-desc">{{ s.description }}</div>
+                                    <div class="dl-stage-meta">
+                                        Findings: <span class="dl-strong">{{ s.issues_count }}</span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ===========================
+                     TAB: TECHNOLOGIES
+                     =========================== -->
+                <div class="dl-tab {% if active_tab == 'tech' %}is-active{% endif %}" data-tab-panel="tech">
+                    <div class="dl-header">
+                        <div class="dl-header-left">
+                            <h1 class="dl-title">Technologies</h1>
+                            <div class="dl-sub">
+                                Target: <span class="dl-strong">{{ target_display }}</span>
+                                <span class="dl-dot">•</span>
+                                Scanned: <span class="dl-strong">{{ scanned_at }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section class="dl-block">
+                        <div class="dl-block-title">TECHNOLOGY SNAPSHOT</div>
+                        <div class="dl-text">
+                            Technologies below are inferred from public signals (headers, HTML patterns, script paths).
+                            They may be incomplete or partially masked by CDNs/proxies.
+                        </div>
+
+                        <div class="dl-tech">
+                            {% for t in tech_snapshot %}
+                                <div class="dl-tech-row">
+                                    <div class="dl-tech-label">{{ t.label }}</div>
+                                    <div class="dl-tech-value">{{ t.value }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ===========================
+                     TAB: VULNERABILITIES
+                     =========================== -->
+                <div class="dl-tab {% if active_tab == 'vulns' %}is-active{% endif %}" data-tab-panel="vulns">
+                    <div class="dl-header">
+                        <div class="dl-header-left">
+                            <h1 class="dl-title">Vulnerabilities</h1>
+                            <div class="dl-sub">
+                                Target: <span class="dl-strong">{{ target_display }}</span>
+                                <span class="dl-dot">•</span>
+                                Scanned: <span class="dl-strong">{{ scanned_at }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section class="dl-block">
+                        <div class="dl-block-title">ALL DETECTED FINDINGS</div>
+
+                        {% if findings %}
+                            <div class="dl-findings">
+                                {% for f in findings %}
+                                    <div class="dl-finding">
+                                        <div class="dl-finding-head">
+                                            <span class="dl-sev dl-sev--{{ f.severity_key }}">{{ f.severity }}</span>
+                                            <span class="dl-finding-title">{{ f.title }}</span>
+                                        </div>
+                                        <div class="dl-finding-text">{{ f.description }}</div>
+                                        {% if f.evidence %}
+                                            <div class="dl-finding-evidence">Evidence: <span class="dl-mono">{{ f.evidence }}</span></div>
+                                        {% endif %}
+                                        <div class="dl-finding-fix">Recommendation: {{ f.recommendation }}</div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="dl-text">No findings were detected.</div>
+                        {% endif %}
+                    </section>
+                </div>
+
+                <!-- ===========================
+                     TAB: TLS
+                     =========================== -->
+                <div class="dl-tab {% if active_tab == 'tls' %}is-active{% endif %}" data-tab-panel="tls">
+                    <div class="dl-header">
+                        <div class="dl-header-left">
+                            <h1 class="dl-title">SSL / TLS & Configurations</h1>
+                            <div class="dl-sub">
+                                Target: <span class="dl-strong">{{ target_display }}</span>
+                                <span class="dl-dot">•</span>
+                                Scanned: <span class="dl-strong">{{ scanned_at }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section class="dl-block">
+                        <div class="dl-block-title">TLS DETAILS</div>
+
+                        <div class="dl-tech">
+                            <div class="dl-tech-row">
+                                <div class="dl-tech-label">TLS OK</div>
+                                <div class="dl-tech-value">{{ tls_info.ok }}</div>
+                            </div>
+                            <div class="dl-tech-row">
+                                <div class="dl-tech-label">TLS Version</div>
+                                <div class="dl-tech-value">{{ tls_info.tls_version|default:"Unknown" }}</div>
+                            </div>
+                            <div class="dl-tech-row">
+                                <div class="dl-tech-label">Cert Subject</div>
+                                <div class="dl-tech-value">{{ tls_info.cert_subject|default:"—" }}</div>
+                            </div>
+                            <div class="dl-tech-row">
+                                <div class="dl-tech-label">Cert Issuer</div>
+                                <div class="dl-tech-value">{{ tls_info.cert_issuer|default:"—" }}</div>
+                            </div>
+                            <div class="dl-tech-row">
+                                <div class="dl-tech-label">notBefore</div>
+                                <div class="dl-tech-value">{{ tls_info.not_before|default:"—" }}</div>
+                            </div>
+                            <div class="dl-tech-row">
+                                <div class="dl-tech-label">notAfter</div>
+                                <div class="dl-tech-value">{{ tls_info.not_after|default:"—" }}</div>
+                            </div>
+                        </div>
+
+                        {% if tls_info.error %}
+                            <div class="dl-text" style="margin-top:12px;">
+                                Error: <span class="dl-mono">{{ tls_info.error }}</span>
+                            </div>
+                        {% endif %}
+                    </section>
+                </div>
+
+                <!-- ===========================
+                     TAB: REPORT
+                     =========================== -->
+                <div class="dl-tab {% if active_tab == 'report' %}is-active{% endif %}" data-tab-panel="report">
+                    <div class="dl-header">
+                        <div class="dl-header-left">
+                            <h1 class="dl-title">Report</h1>
+                            <div class="dl-sub">
+                                Target: <span class="dl-strong">{{ target_display }}</span>
+                                <span class="dl-dot">•</span>
+                                Scanned: <span class="dl-strong">{{ scanned_at }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section class="dl-block">
+                        <div class="dl-block-title">EXECUTIVE SUMMARY</div>
+                        <div class="dl-text">
+                            Risk score: <span class="dl-strong">{{ risk_score }}/100</span> — <span class="dl-strong">{{ risk_level }}</span>.
+                            Total findings: <span class="dl-strong">{{ metrics.total }}</span>.
+                        </div>
+                    </section>
+
+                    <section class="dl-block">
+                        <div class="dl-block-title">IMPORTANT NOTES</div>
+                        <div class="dl-text">
+                            This report is based on passive analysis only. It does not perform intrusive scanning,
+                            authentication checks, or exploit validation. Use it as a prioritization layer before deeper testing.
+                        </div>
+                    </section>
+                </div>
+
+            {% endif %}
+        </main>
+    </div>
+
+    <script src="{% static 'js/analysis_results.js' %}"></script>
+</body>
+</html>
+{% endblock %}
