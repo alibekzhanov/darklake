@@ -7,6 +7,11 @@
     font-family: "Mulish", sans-serif;
 }
 
+html,
+body {
+    min-height: 100%;
+}
+
 body {
     background: url("/static/images/bg-2.jpg") no-repeat center center fixed;
     background-size: cover;
@@ -27,7 +32,8 @@ body {
 
 .search_section {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    padding: 110px 16px 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -35,10 +41,12 @@ body {
 }
 
 .search-title {
+    max-width: 760px;
     font-weight: 700;
     font-size: 24px;
+    line-height: 1.25;
     color: #ffffff;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     text-align: center;
 }
 
@@ -53,13 +61,13 @@ body {
 
 .search-box {
     flex: 1;
-    height: 40px;
+    height: 44px;
+    min-width: 0;
     border-radius: 999px;
     display: flex;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 18px;
     gap: 12px;
-
     background:
         linear-gradient(#050505, #050505) padding-box,
         linear-gradient(115deg, #1A1A1A, #FFFFFF) border-box;
@@ -74,6 +82,7 @@ body {
 
 .search-input {
     flex: 1;
+    min-width: 0;
     height: 100%;
     background: transparent;
     outline: none;
@@ -87,11 +96,11 @@ body {
 }
 
 .analyze-btn {
-    height: 40px;
-    padding: 0 32px;
+    height: 44px;
+    padding: 0 28px;
     white-space: nowrap;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 600;
     color: #ffffff;
     background:
         linear-gradient(#050505, #050505) padding-box,
@@ -107,6 +116,87 @@ body {
     background:
         linear-gradient(115deg, #0094D9, #00FFFF) padding-box,
         linear-gradient(115deg, #0094D9, #00FFFF) border-box;
-    transition: 0.25s ease;
 }
 
+@media (max-width: 1100px) {
+    .search-container {
+        width: 72%;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        animation: none;
+        background-position: center center;
+    }
+
+    .search_section {
+        padding: 100px 16px 32px;
+        justify-content: center;
+    }
+
+    .search-title {
+        font-size: 21px;
+        margin-bottom: 18px;
+    }
+
+    .search-container {
+        width: 100%;
+        max-width: 540px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .search-box,
+    .analyze-btn {
+        width: 100%;
+    }
+
+    .search-box {
+        height: 48px;
+        padding: 0 16px;
+    }
+
+    .search-input {
+        font-size: 15px;
+    }
+
+    .analyze-btn {
+        height: 48px;
+        padding: 0 20px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .search_section {
+        padding: 92px 12px 28px;
+    }
+
+    .search-title {
+        font-size: 18px;
+        line-height: 1.35;
+        margin-bottom: 16px;
+    }
+
+    .search-box {
+        height: 46px;
+        gap: 10px;
+        padding: 0 14px;
+    }
+
+    .search-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .search-input {
+        font-size: 14px;
+    }
+
+    .analyze-btn {
+        height: 46px;
+        font-size: 14px;
+    }
+}

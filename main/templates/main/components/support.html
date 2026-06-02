@@ -1,0 +1,77 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/components/support.css' %}">
+
+<main class="info-page support-page">
+    <section class="info-hero">
+        <div class="info-kicker">Support</div>
+        <h1 class="info-title">Need help reading a scan or improving a finding?</h1>
+        <p class="info-lead">
+            Use this page as a quick guide for understanding Darklake results, preparing a target,
+            and deciding what to do after a passive analysis.
+        </p>
+    </section>
+
+    <section class="support-grid">
+        <article class="support-card support-card--accent">
+            <div class="panel-label">Before scanning</div>
+            <h2>Use a public website URL</h2>
+            <p>
+                Darklake works with public HTTP and HTTPS targets. Internal addresses, private IPs,
+                and authenticated-only areas are outside the passive scan scope.
+            </p>
+        </article>
+
+        <article class="support-card">
+            <div class="panel-label">Results</div>
+            <h2>Start with severe findings</h2>
+            <p>
+                Review critical and high items first, then use the evidence field to confirm what
+                Darklake saw from the outside.
+            </p>
+        </article>
+
+        <article class="support-card">
+            <div class="panel-label">Reports</div>
+            <h2>Export the PDF summary</h2>
+            <p>
+                The report keeps the scan overview, findings, and recommendations together for
+                handoff or follow-up work.
+            </p>
+        </article>
+    </section>
+
+    <section class="faq-panel">
+        <div class="panel-label">FAQ</div>
+
+        <div class="faq-list">
+            <article class="faq-item">
+                <h2>Does Darklake perform attacks?</h2>
+                <p>No. It performs passive analysis of public signals and does not exploit, brute force, or authenticate.</p>
+            </article>
+
+            <article class="faq-item">
+                <h2>Why can results differ from a full audit?</h2>
+                <p>Passive checks can only see externally visible signals. Hidden application logic needs deeper testing.</p>
+            </article>
+
+            <article class="faq-item">
+                <h2>What should I do after a high-risk result?</h2>
+                <p>Confirm the evidence, apply the recommendation, and rerun the analysis after the change is deployed.</p>
+            </article>
+        </div>
+
+        <div class="support-cta">
+            <div>
+                <h2>Ready to check another website?</h2>
+                <p>Run a fresh passive scan from the homepage.</p>
+            </div>
+            <a class="info-button info-button--primary" href="{% url 'home' %}">Start analysis</a>
+        </div>
+    </section>
+</main>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/components/features.css' %}">
+
+<main class="info-page features-page">
+    <section class="info-hero">
+        <div class="info-kicker">Darklake Features</div>
+        <h1 class="info-title">Passive website security analysis in one clean view.</h1>
+        <p class="info-lead">
+            Darklake checks public website signals and turns them into a readable risk snapshot:
+            headers, TLS, exposed technologies, redirects, and common hardening gaps.
+        </p>
+
+        <div class="info-actions">
+            <a class="info-button info-button--primary" href="{% url 'home' %}">Start analysis</a>
+            <a class="info-button" href="{% url 'about' %}">How it works</a>
+        </div>
+    </section>
+
+    <section class="feature-grid" aria-label="Darklake feature list">
+        <article class="feature-card feature-card--wide">
+            <span class="feature-number">01</span>
+            <h2>Risk overview</h2>
+            <p>
+                A compact dashboard summarizes the target, overall risk score, severity mix,
+                and the most important findings first.
+            </p>
+        </article>
+
+        <article class="feature-card">
+            <span class="feature-number">02</span>
+            <h2>Security headers</h2>
+            <p>
+                Detect missing or weak browser protections such as CSP, HSTS, frame controls,
+                and permissions policy.
+            </p>
+        </article>
+
+        <article class="feature-card">
+            <span class="feature-number">03</span>
+            <h2>TLS & certificate</h2>
+            <p>
+                Review certificate metadata, TLS availability, validity dates, issuer data,
+                and connection warnings.
+            </p>
+        </article>
+
+        <article class="feature-card">
+            <span class="feature-number">04</span>
+            <h2>Technology signals</h2>
+            <p>
+                Identify public stack hints from headers, HTML patterns, scripts, redirects,
+                CDN indicators, and server responses.
+            </p>
+        </article>
+
+        <article class="feature-card">
+            <span class="feature-number">05</span>
+            <h2>Prioritized findings</h2>
+            <p>
+                Findings include severity, evidence, and practical recommendations so the next
+                fix is easier to choose.
+            </p>
+        </article>
+
+        <article class="feature-card feature-card--accent">
+            <span class="feature-number">06</span>
+            <h2>PDF report</h2>
+            <p>
+                Export a clean report for sharing scan context, executive summary, and detailed
+                remediation notes.
+            </p>
+        </article>
+    </section>
+</main>
+
+{% endblock %}

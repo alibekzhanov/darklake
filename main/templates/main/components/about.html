@@ -1,0 +1,70 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/components/about.css' %}">
+
+<main class="info-page about-page">
+    <section class="info-hero">
+        <div class="info-kicker">About Darklake</div>
+        <h1 class="info-title">A focused security lens for public website signals.</h1>
+        <p class="info-lead">
+            Darklake is built for quick, non-intrusive website checks. It helps surface visible
+            misconfigurations, outdated hardening choices, and stack clues before deeper testing begins.
+        </p>
+    </section>
+
+    <section class="about-layout">
+        <div class="about-panel about-panel--main">
+            <div class="panel-label">Mission</div>
+            <h2>Make first-pass security review fast, readable, and useful.</h2>
+            <p>
+                Security reports can become noisy quickly. Darklake keeps the first pass intentionally
+                narrow: collect passive signals, score common risks, and explain what each finding means.
+            </p>
+            <p>
+                It is not a replacement for a full penetration test. It is a calm starting point for
+                teams that want to understand obvious exposure without running intrusive scans.
+            </p>
+        </div>
+
+        <aside class="about-panel about-panel--aside">
+            <div class="panel-label">Principles</div>
+            <ul class="principle-list">
+                <li>Passive checks only</li>
+                <li>Clear evidence for every finding</li>
+                <li>Readable severity and score</li>
+                <li>Actionable remediation notes</li>
+            </ul>
+        </aside>
+    </section>
+
+    <section class="process-grid" aria-label="Darklake analysis process">
+        <article class="process-card">
+            <span>01</span>
+            <h2>Normalize the target</h2>
+            <p>The URL is cleaned and prepared for safe public checks.</p>
+        </article>
+
+        <article class="process-card">
+            <span>02</span>
+            <h2>Read visible signals</h2>
+            <p>Darklake reviews headers, TLS data, redirects, and response metadata.</p>
+        </article>
+
+        <article class="process-card">
+            <span>03</span>
+            <h2>Score common risks</h2>
+            <p>Findings are grouped by severity and translated into an overall risk score.</p>
+        </article>
+
+        <article class="process-card">
+            <span>04</span>
+            <h2>Explain next steps</h2>
+            <p>Each result includes context and a practical recommendation.</p>
+        </article>
+    </section>
+</main>
+
+{% endblock %}
